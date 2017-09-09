@@ -12,13 +12,17 @@
 		9E681EF31F6344860093DAE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E681EF11F6344860093DAE6 /* Main.storyboard */; };
 		9E681EF51F6344860093DAE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E681EF41F6344860093DAE6 /* Assets.xcassets */; };
 		9E681EF81F6344860093DAE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E681EF61F6344860093DAE6 /* LaunchScreen.storyboard */; };
+		9E7475FE1F6429B600BA0D15 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7475FD1F6429B600BA0D15 /* Meal.swift */; };
 		9E7CE7001F63480500C2862D /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E7CE6FE1F63480500C2862D /* HockeySDK.framework */; };
 		9E7CE7011F63480500C2862D /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9E7CE6FF1F63480500C2862D /* HockeySDKResources.bundle */; };
 		9E7CE7031F634A4600C2862D /* SmartPlateKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7CE7021F634A4600C2862D /* SmartPlateKit.swift */; };
 		9E7CE7051F634A6F00C2862D /* StomachIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7CE7041F634A6F00C2862D /* StomachIndicatorView.swift */; };
+		C91213F95A259829B62A6DFC /* Pods_SmartPlate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 678A64B4421D80F09053E14D /* Pods_SmartPlate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		58F629B043040D5911752DF4 /* Pods-SmartPlate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartPlate.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartPlate/Pods-SmartPlate.debug.xcconfig"; sourceTree = "<group>"; };
+		678A64B4421D80F09053E14D /* Pods_SmartPlate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartPlate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E681EEA1F6344860093DAE6 /* SmartPlate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartPlate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E681EED1F6344860093DAE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = /Users/dnp/Git/SmartPlate/SmartPlate/AppDelegate.swift; sourceTree = "<absolute>"; };
 		9E681EEF1F6344860093DAE6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,10 +30,12 @@
 		9E681EF41F6344860093DAE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E681EF71F6344860093DAE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E681EF91F6344860093DAE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9E7475FD1F6429B600BA0D15 /* Meal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		9E7CE6FE1F63480500C2862D /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		9E7CE6FF1F63480500C2862D /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		9E7CE7021F634A4600C2862D /* SmartPlateKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmartPlateKit.swift; sourceTree = "<group>"; };
 		9E7CE7041F634A6F00C2862D /* StomachIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StomachIndicatorView.swift; sourceTree = "<group>"; };
+		EEEF8E7C54F2CA34432E97E1 /* Pods-SmartPlate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartPlate.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmartPlate/Pods-SmartPlate.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,17 +44,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E7CE7001F63480500C2862D /* HockeySDK.framework in Frameworks */,
+				C91213F95A259829B62A6DFC /* Pods_SmartPlate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		206C127D0F92F07AEB2B2E91 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				58F629B043040D5911752DF4 /* Pods-SmartPlate.debug.xcconfig */,
+				EEEF8E7C54F2CA34432E97E1 /* Pods-SmartPlate.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		6E5C8A59B33081D0A1B559AC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				678A64B4421D80F09053E14D /* Pods_SmartPlate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9E681EE11F6344860093DAE6 = {
 			isa = PBXGroup;
 			children = (
 				9E681EEC1F6344860093DAE6 /* SmartPlate */,
 				9E681EEB1F6344860093DAE6 /* Products */,
+				206C127D0F92F07AEB2B2E91 /* Pods */,
+				6E5C8A59B33081D0A1B559AC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,6 +98,7 @@
 				9E681EF41F6344860093DAE6 /* Assets.xcassets */,
 				9E681EF61F6344860093DAE6 /* LaunchScreen.storyboard */,
 				9E681EF91F6344860093DAE6 /* Info.plist */,
+				9E7475FD1F6429B600BA0D15 /* Meal.swift */,
 			);
 			path = SmartPlate;
 			sourceTree = "<group>";
@@ -92,10 +119,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E681EFC1F6344860093DAE6 /* Build configuration list for PBXNativeTarget "SmartPlate" */;
 			buildPhases = (
+				722485A8D16443D96A8F67FF /* [CP] Check Pods Manifest.lock */,
 				9E681EE61F6344860093DAE6 /* Sources */,
 				9E681EE71F6344860093DAE6 /* Frameworks */,
 				9E681EE81F6344860093DAE6 /* Resources */,
 				9E681EFF1F6345090093DAE6 /* ShellScript */,
+				534AE85BDEF2B9FC2C7E826C /* [CP] Embed Pods Frameworks */,
+				FE21DE8C33D5188A207128FC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -156,6 +186,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		534AE85BDEF2B9FC2C7E826C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmartPlate/Pods-SmartPlate-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		722485A8D16443D96A8F67FF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		9E681EFF1F6345090093DAE6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -169,6 +229,21 @@
 			shellPath = /bin/sh;
 			shellScript = "FILE=\"${SRCROOT}/HockeySDK-iOS/BuildAgent\"\nif [ -f \"$FILE\" ]; then\n\"$FILE\"\nfi";
 		};
+		FE21DE8C33D5188A207128FC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmartPlate/Pods-SmartPlate-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -176,6 +251,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E7475FE1F6429B600BA0D15 /* Meal.swift in Sources */,
 				9E7CE7051F634A6F00C2862D /* StomachIndicatorView.swift in Sources */,
 				9E681EF01F6344860093DAE6 /* ViewController.swift in Sources */,
 				9E7CE7031F634A4600C2862D /* SmartPlateKit.swift in Sources */,
@@ -300,6 +376,7 @@
 		};
 		9E681EFD1F6344860093DAE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 58F629B043040D5911752DF4 /* Pods-SmartPlate.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 97BN8Z3HWP;
@@ -317,6 +394,7 @@
 		};
 		9E681EFE1F6344860093DAE6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EEEF8E7C54F2CA34432E97E1 /* Pods-SmartPlate.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 97BN8Z3HWP;

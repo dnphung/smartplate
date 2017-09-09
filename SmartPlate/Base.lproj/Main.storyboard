@@ -35,6 +35,9 @@
                             <constraint firstItem="cAr-3n-kTe" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="zeO-h5-wRU"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="stomachView" destination="cAr-3n-kTe" id="yAW-cM-3An"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

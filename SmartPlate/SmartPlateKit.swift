@@ -20,6 +20,9 @@ public class SmartPlateKit : NSObject {
     private struct Cache {
         static let smartPlate_Green: UIColor = UIColor(red: 0.689, green: 0.910, blue: 0.502, alpha: 1.000)
         static let smartPlate_Red: UIColor = UIColor(red: 0.922, green: 0.363, blue: 0.363, alpha: 1.000)
+        static let smartPlate_Yellow: UIColor = UIColor(red: 1.000, green: 0.883, blue: 0.052, alpha: 1.000)
+        static let smartPlate_Turquoise: UIColor = UIColor(red: 0.242, green: 0.841, blue: 0.828, alpha: 1.000)
+        static let shadow: NSShadow = NSShadow(color: UIColor.black.withAlphaComponent(0.38), offset: CGSize(width: -7, height: 0), blurRadius: 20)
         static var image: UIImage?
 
     }
@@ -28,6 +31,12 @@ public class SmartPlateKit : NSObject {
 
     @objc dynamic public class var smartPlate_Green: UIColor { return Cache.smartPlate_Green }
     @objc dynamic public class var smartPlate_Red: UIColor { return Cache.smartPlate_Red }
+    @objc dynamic public class var smartPlate_Yellow: UIColor { return Cache.smartPlate_Yellow }
+    @objc dynamic public class var smartPlate_Turquoise: UIColor { return Cache.smartPlate_Turquoise }
+
+    //// Shadows
+
+    @objc dynamic public class var shadow: NSShadow { return Cache.shadow }
 
     //// Images
 
@@ -40,7 +49,7 @@ public class SmartPlateKit : NSObject {
 
     //// Drawing Methods
 
-    @objc dynamic public class func drawCanvas1(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 375, height: 667), resizing: ResizingBehavior = .aspectFit, nutritionValue: CGFloat = 246) {
+    @objc dynamic public class func drawCanvas1(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 375, height: 667), resizing: ResizingBehavior = .aspectFit, fatValue: CGFloat = 6, carbsValue: CGFloat = 151, proteinValue: CGFloat = 158, sugarValue: CGFloat = 181, caloriesTrackingValue: String = "1500 / 2500 kcal") {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
@@ -49,35 +58,60 @@ public class SmartPlateKit : NSObject {
         let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 375, height: 667), target: targetFrame)
         context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         context.scaleBy(x: resizedFrame.width / 375, y: resizedFrame.height / 667)
+        let resizedShadowScale: CGFloat = min(resizedFrame.width / 375, resizedFrame.height / 667)
 
 
         //// layer1
         //// Rectangle Drawing
-        let rectanglePath = UIBezierPath(rect: CGRect(x: 0, y: 167, width: 375, height: 340))
+        let rectanglePath = UIBezierPath(rect: CGRect(x: 0, y: 165, width: 375, height: 340))
         UIColor.gray.setFill()
         rectanglePath.fill()
 
 
-        //// unhealthyIndicator Drawing
+        //// sugarIndicator Drawing
         context.saveGState()
-        context.translateBy(x: 375, y: 513)
+        context.translateBy(x: 375, y: 511)
         context.rotate(by: 180 * CGFloat.pi/180)
 
-        let unhealthyIndicatorPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 375, height: nutritionValue))
-        SmartPlateKit.smartPlate_Red.setFill()
-        unhealthyIndicatorPath.fill()
+        let sugarIndicatorPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 375, height: sugarValue))
+        SmartPlateKit.smartPlate_Yellow.setFill()
+        sugarIndicatorPath.fill()
 
         context.restoreGState()
 
 
-        //// healthyIndicator Drawing
+        //// proteinIndicator Drawing
+        context.saveGState()
+        context.translateBy(x: 375, y: 511)
+        context.rotate(by: 180 * CGFloat.pi/180)
+
+        let proteinIndicatorPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 375, height: proteinValue))
+        SmartPlateKit.smartPlate_Turquoise.setFill()
+        proteinIndicatorPath.fill()
+
+        context.restoreGState()
+
+
+        //// carbsIndicator Drawing
         context.saveGState()
         context.translateBy(x: 375, y: 513)
         context.rotate(by: 180 * CGFloat.pi/180)
 
-        let healthyIndicatorPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 375, height: 83))
+        let carbsIndicatorPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 375, height: carbsValue))
         SmartPlateKit.smartPlate_Green.setFill()
-        healthyIndicatorPath.fill()
+        carbsIndicatorPath.fill()
+
+        context.restoreGState()
+
+
+        //// fatIndicator Drawing
+        context.saveGState()
+        context.translateBy(x: 375, y: 513)
+        context.rotate(by: 180 * CGFloat.pi/180)
+
+        let fatIndicatorPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 375, height: fatValue))
+        SmartPlateKit.smartPlate_Red.setFill()
+        fatIndicatorPath.fill()
 
         context.restoreGState()
 
@@ -140,31 +174,68 @@ public class SmartPlateKit : NSObject {
         rect3693Path.addLine(to: CGPoint(x: 375, y: 161))
         rect3693Path.addLine(to: CGPoint(x: -0.14, y: 161))
         rect3693Path.close()
+        context.saveGState()
+        context.setShadow(offset: CGSize(width: SmartPlateKit.shadow.shadowOffset.width * resizedShadowScale, height: SmartPlateKit.shadow.shadowOffset.height * resizedShadowScale), blur: SmartPlateKit.shadow.shadowBlurRadius * resizedShadowScale, color: (SmartPlateKit.shadow.shadowColor as! UIColor).cgColor)
         UIColor.white.setFill()
         rect3693Path.fill()
+        context.restoreGState()
+
+
+
+        //// Rectangle 2 Drawing
+        let rectangle2Path = UIBezierPath(rect: CGRect(x: 1, y: 114, width: 375, height: 47))
+        UIColor.white.setFill()
+        rectangle2Path.fill()
+
+
+        //// Rectangle 3 Drawing
+        let rectangle3Path = UIBezierPath(rect: CGRect(x: 0, y: 511, width: 375, height: 29))
+        UIColor.white.setFill()
+        rectangle3Path.fill()
 
 
         //// Text Drawing
-        let textRect = CGRect(x: 22, y: 430, width: 94, height: 25)
-        let textTextContent = "577kcal"
+        let textRect = CGRect(x: 16, y: 74, width: 342, height: 40)
         let textStyle = NSMutableParagraphStyle()
-        textStyle.alignment = .left
+        textStyle.alignment = .center
         let textFontAttributes = [
-            NSFontAttributeName: UIFont.systemFont(ofSize: UIFont.labelFontSize),
+            NSFontAttributeName: UIFont.systemFont(ofSize: 28),
             NSForegroundColorAttributeName: UIColor.black,
             NSParagraphStyleAttributeName: textStyle,
         ]
 
-        let textTextHeight: CGFloat = textTextContent.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
+        let textTextHeight: CGFloat = caloriesTrackingValue.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
         context.saveGState()
         context.clip(to: textRect)
-        textTextContent.draw(in: CGRect(x: textRect.minX, y: textRect.minY + (textRect.height - textTextHeight) / 2, width: textRect.width, height: textTextHeight), withAttributes: textFontAttributes)
+        caloriesTrackingValue.draw(in: CGRect(x: textRect.minX, y: textRect.minY + (textRect.height - textTextHeight) / 2, width: textRect.width, height: textTextHeight), withAttributes: textFontAttributes)
+        context.restoreGState()
+    
+
+
+
+
+        //// Text 3 Drawing
+        let text3Rect = CGRect(x: 18, y: 43, width: 342, height: 31)
+        let text3TextContent = "What is in my stomach?"
+        let text3Style = NSMutableParagraphStyle()
+        text3Style.alignment = .center
+        let text3FontAttributes = [
+            NSFontAttributeName: UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: UIFontWeightBold),
+            NSForegroundColorAttributeName: UIColor.black,
+            NSParagraphStyleAttributeName: text3Style,
+        ]
+
+        let text3TextHeight: CGFloat = text3TextContent.boundingRect(with: CGSize(width: text3Rect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: text3FontAttributes, context: nil).height
+        context.saveGState()
+        context.clip(to: text3Rect)
+        text3TextContent.draw(in: CGRect(x: text3Rect.minX, y: text3Rect.minY + (text3Rect.height - text3TextHeight) / 2, width: text3Rect.width, height: text3TextHeight), withAttributes: text3FontAttributes)
         context.restoreGState()
 
 
+        //// Group
         //// Text 2 Drawing
-        let text2Rect = CGRect(x: 270, y: 237, width: 94, height: 25)
-        let text2TextContent = "1930kcal"
+        let text2Rect = CGRect(x: 70, y: 561, width: 94, height: 25)
+        let text2TextContent = "Carbs"
         let text2Style = NSMutableParagraphStyle()
         text2Style.alignment = .left
         let text2FontAttributes = [
@@ -180,24 +251,82 @@ public class SmartPlateKit : NSObject {
         context.restoreGState()
 
 
+        //// Oval Drawing
+        let ovalPath = UIBezierPath(ovalIn: CGRect(x: 32, y: 561, width: 25, height: 25))
+        SmartPlateKit.smartPlate_Green.setFill()
+        ovalPath.fill()
 
 
-        //// Text 3 Drawing
-        let text3Rect = CGRect(x: 16, y: 23, width: 342, height: 91)
-        let text3TextContent = "Smart Plate Summary"
-        let text3Style = NSMutableParagraphStyle()
-        text3Style.alignment = .center
-        let text3FontAttributes = [
+        //// Text 4 Drawing
+        let text4Rect = CGRect(x: 70, y: 606, width: 94, height: 25)
+        let text4TextContent = "Fat"
+        let text4Style = NSMutableParagraphStyle()
+        text4Style.alignment = .left
+        let text4FontAttributes = [
             NSFontAttributeName: UIFont.systemFont(ofSize: UIFont.labelFontSize),
             NSForegroundColorAttributeName: UIColor.black,
-            NSParagraphStyleAttributeName: text3Style,
+            NSParagraphStyleAttributeName: text4Style,
         ]
 
-        let text3TextHeight: CGFloat = text3TextContent.boundingRect(with: CGSize(width: text3Rect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: text3FontAttributes, context: nil).height
+        let text4TextHeight: CGFloat = text4TextContent.boundingRect(with: CGSize(width: text4Rect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: text4FontAttributes, context: nil).height
         context.saveGState()
-        context.clip(to: text3Rect)
-        text3TextContent.draw(in: CGRect(x: text3Rect.minX, y: text3Rect.minY + (text3Rect.height - text3TextHeight) / 2, width: text3Rect.width, height: text3TextHeight), withAttributes: text3FontAttributes)
+        context.clip(to: text4Rect)
+        text4TextContent.draw(in: CGRect(x: text4Rect.minX, y: text4Rect.minY + (text4Rect.height - text4TextHeight) / 2, width: text4Rect.width, height: text4TextHeight), withAttributes: text4FontAttributes)
         context.restoreGState()
+
+
+        //// Oval 2 Drawing
+        let oval2Path = UIBezierPath(ovalIn: CGRect(x: 32, y: 606, width: 25, height: 25))
+        SmartPlateKit.smartPlate_Red.setFill()
+        oval2Path.fill()
+
+
+        //// Text 5 Drawing
+        let text5Rect = CGRect(x: 250, y: 563, width: 94, height: 25)
+        let text5TextContent = "Sugar"
+        let text5Style = NSMutableParagraphStyle()
+        text5Style.alignment = .left
+        let text5FontAttributes = [
+            NSFontAttributeName: UIFont.systemFont(ofSize: UIFont.labelFontSize),
+            NSForegroundColorAttributeName: UIColor.black,
+            NSParagraphStyleAttributeName: text5Style,
+        ]
+
+        let text5TextHeight: CGFloat = text5TextContent.boundingRect(with: CGSize(width: text5Rect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: text5FontAttributes, context: nil).height
+        context.saveGState()
+        context.clip(to: text5Rect)
+        text5TextContent.draw(in: CGRect(x: text5Rect.minX, y: text5Rect.minY + (text5Rect.height - text5TextHeight) / 2, width: text5Rect.width, height: text5TextHeight), withAttributes: text5FontAttributes)
+        context.restoreGState()
+
+
+        //// Oval 3 Drawing
+        let oval3Path = UIBezierPath(ovalIn: CGRect(x: 212, y: 563, width: 25, height: 25))
+        SmartPlateKit.smartPlate_Yellow.setFill()
+        oval3Path.fill()
+
+
+        //// Text 6 Drawing
+        let text6Rect = CGRect(x: 250, y: 606, width: 94, height: 25)
+        let text6TextContent = "Protein"
+        let text6Style = NSMutableParagraphStyle()
+        text6Style.alignment = .left
+        let text6FontAttributes = [
+            NSFontAttributeName: UIFont.systemFont(ofSize: UIFont.labelFontSize),
+            NSForegroundColorAttributeName: UIColor.black,
+            NSParagraphStyleAttributeName: text6Style,
+        ]
+
+        let text6TextHeight: CGFloat = text6TextContent.boundingRect(with: CGSize(width: text6Rect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: text6FontAttributes, context: nil).height
+        context.saveGState()
+        context.clip(to: text6Rect)
+        text6TextContent.draw(in: CGRect(x: text6Rect.minX, y: text6Rect.minY + (text6Rect.height - text6TextHeight) / 2, width: text6Rect.width, height: text6TextHeight), withAttributes: text6FontAttributes)
+        context.restoreGState()
+
+
+        //// Oval 4 Drawing
+        let oval4Path = UIBezierPath(ovalIn: CGRect(x: 212, y: 606, width: 25, height: 25))
+        SmartPlateKit.smartPlate_Turquoise.setFill()
+        oval4Path.fill()
         
         context.restoreGState()
 
@@ -243,5 +372,16 @@ public class SmartPlateKit : NSObject {
             result.origin.y = target.minY + (target.height - result.height) / 2
             return result
         }
+    }
+}
+
+
+
+private extension NSShadow {
+    convenience init(color: AnyObject!, offset: CGSize, blurRadius: CGFloat) {
+        self.init()
+        self.shadowColor = color
+        self.shadowOffset = offset
+        self.shadowBlurRadius = blurRadius
     }
 }
