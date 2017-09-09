@@ -8,15 +8,37 @@
 
 import Foundation
 import ObjectMapper
-class Meal: Mappable {
-    var calories: Int
-    required init?(map: Map) {
-        if map.JSON["device_class_name"] == nil {
-            print("JSON attribute 'device_class_name' couldn't be found")
+import RealmSwift
+
+class Meal: Object, Mappable {
+    dynamic var calories = 0.0
+    dynamic var carbs = 0.0
+    dynamic var fat = 0.0
+    dynamic var protein = 0.0
+    dynamic var foodType = ""
+    
+    required convenience init?(map: Map) {
+        self.init()
+        if map.JSON["calories"] == nil {
+            print("JSON attribute 'calories' couldn't be found")
+        }
+        if map.JSON["carbs"] == nil {
+            print("JSON attribute 'carbs' couldn't be found")
+        }
+        if map.JSON["fat"] == nil {
+            print("JSON attribute 'fat' couldn't be found")
+        }
+        if map.JSON["protein"] == nil {
+            print("JSON attribute 'protein' couldn't be found")
         }
     }
-    
-    func mapping(map: Map) { }
-    
 
+    
+    func mapping(map: Map) {
+        calories <- map["calories"]
+        carbs <- map["carbs"]
+        fat <- map["fat"]
+        protein <- map["protein"]
+    }
+    
 }

@@ -22,6 +22,7 @@ public class SmartPlateKit : NSObject {
         static let smartPlate_Red: UIColor = UIColor(red: 0.922, green: 0.363, blue: 0.363, alpha: 1.000)
         static let smartPlate_Yellow: UIColor = UIColor(red: 1.000, green: 0.883, blue: 0.052, alpha: 1.000)
         static let smartPlate_Turquoise: UIColor = UIColor(red: 0.242, green: 0.841, blue: 0.828, alpha: 1.000)
+        static let smartPlate_LightBlue: UIColor = UIColor(red: 0.902, green: 0.961, blue: 1.000, alpha: 1.000)
         static let shadow: NSShadow = NSShadow(color: UIColor.black.withAlphaComponent(0.38), offset: CGSize(width: -7, height: 0), blurRadius: 20)
         static var image: UIImage?
 
@@ -33,6 +34,7 @@ public class SmartPlateKit : NSObject {
     @objc dynamic public class var smartPlate_Red: UIColor { return Cache.smartPlate_Red }
     @objc dynamic public class var smartPlate_Yellow: UIColor { return Cache.smartPlate_Yellow }
     @objc dynamic public class var smartPlate_Turquoise: UIColor { return Cache.smartPlate_Turquoise }
+    @objc dynamic public class var smartPlate_LightBlue: UIColor { return Cache.smartPlate_LightBlue }
 
     //// Shadows
 
@@ -49,7 +51,7 @@ public class SmartPlateKit : NSObject {
 
     //// Drawing Methods
 
-    @objc dynamic public class func drawCanvas1(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 375, height: 667), resizing: ResizingBehavior = .aspectFit, fatValue: CGFloat = 6, carbsValue: CGFloat = 151, proteinValue: CGFloat = 158, sugarValue: CGFloat = 181, caloriesTrackingValue: String = "1500 / 2500 kcal") {
+    @objc dynamic public class func drawCanvas1(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 375, height: 667), resizing: ResizingBehavior = .aspectFit, fatValue: CGFloat = 68, carbsValue: CGFloat = 151, proteinValue: CGFloat = 158, othersValue: CGFloat = 181, caloriesTrackingValue: String = "1500 / 2500 kcal") {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
@@ -62,18 +64,12 @@ public class SmartPlateKit : NSObject {
 
 
         //// layer1
-        //// Rectangle Drawing
-        let rectanglePath = UIBezierPath(rect: CGRect(x: 0, y: 165, width: 375, height: 340))
-        UIColor.gray.setFill()
-        rectanglePath.fill()
-
-
         //// sugarIndicator Drawing
         context.saveGState()
         context.translateBy(x: 375, y: 511)
         context.rotate(by: 180 * CGFloat.pi/180)
 
-        let sugarIndicatorPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 375, height: sugarValue))
+        let sugarIndicatorPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 375, height: othersValue))
         SmartPlateKit.smartPlate_Yellow.setFill()
         sugarIndicatorPath.fill()
 
@@ -183,15 +179,27 @@ public class SmartPlateKit : NSObject {
 
 
         //// Rectangle 2 Drawing
-        let rectangle2Path = UIBezierPath(rect: CGRect(x: 1, y: 114, width: 375, height: 47))
+        let rectangle2Path = UIBezierPath(rect: CGRect(x: 1, y: 134, width: 375, height: 27))
         UIColor.white.setFill()
         rectangle2Path.fill()
 
 
         //// Rectangle 3 Drawing
-        let rectangle3Path = UIBezierPath(rect: CGRect(x: 0, y: 511, width: 375, height: 29))
+        let rectangle3Path = UIBezierPath(rect: CGRect(x: 0, y: 511, width: 375, height: 28))
         UIColor.white.setFill()
         rectangle3Path.fill()
+
+
+        //// Rectangle Drawing
+        let rectanglePath = UIBezierPath(rect: CGRect(x: 0, y: 541, width: 375, height: 126))
+        SmartPlateKit.smartPlate_LightBlue.setFill()
+        rectanglePath.fill()
+
+
+        //// Rectangle 4 Drawing
+        let rectangle4Path = UIBezierPath(rect: CGRect(x: 1, y: 0, width: 375, height: 134))
+        SmartPlateKit.smartPlate_LightBlue.setFill()
+        rectangle4Path.fill()
 
 
         //// Text Drawing
@@ -209,7 +217,6 @@ public class SmartPlateKit : NSObject {
         context.clip(to: textRect)
         caloriesTrackingValue.draw(in: CGRect(x: textRect.minX, y: textRect.minY + (textRect.height - textTextHeight) / 2, width: textRect.width, height: textTextHeight), withAttributes: textFontAttributes)
         context.restoreGState()
-    
 
 
 
@@ -283,7 +290,7 @@ public class SmartPlateKit : NSObject {
 
         //// Text 5 Drawing
         let text5Rect = CGRect(x: 250, y: 563, width: 94, height: 25)
-        let text5TextContent = "Sugar"
+        let text5TextContent = "Others"
         let text5Style = NSMutableParagraphStyle()
         text5Style.alignment = .left
         let text5FontAttributes = [

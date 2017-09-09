@@ -4,7 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>ObjectMapper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SmartPlate.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Realm.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RealmSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>57A4C9C1FC95011FB52841DBC3B31454</key>
+		<key>06D9003BC4699D12C3465DD2FE19F260</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>70F78D0760D84057C9F9525385D0B182</key>
+		<key>4AD9023D1947D7A9448E9CAE72185FDA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CE3BEB8B6086B40FDAC9DE4C601606B7</key>
+		<key>9855EFB5FF1EF2355FC264F0CB4F6262</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B703FECB8A84210FDA793F735BE4D276</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CD6C9FB6B052E1CF663F8A56041EA163</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E20513D6F3EE3C2C6B0B968AB722CB9B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -8,40 +8,48 @@
 
 import UIKit
 import SocketIO
+import RealmSwift
 
 class ViewController: UIViewController {
     @IBOutlet var stomachView: StomachIndicatorView!
-    var fatValue: Int?
-    var carbsValue: Int?
-    var proteinValue: Int?
-    var sugarValue: Int?
-    var caloriesUpToNow: Int?
+    var fatValueTotal = 0.0
+    var carbsValueTotal = 0.0
+    var proteinValueTotal = 0.0
+    var othersValueTotal = 0.0
+    var caloriesUpToNow = 0.0
     
-    var caloriesGoal: Int?
+    var fatReference = 0.0
+    var carbsReference = 0.0
+    var proteinReference = 0.0
+    var othersReference = 0.0
     
-    var meals: [Meals]?
+    var caloriesGoal = 3500.0
+    
+    var meals: Results<Meal>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initDemo()
+        loadData()
         setupValues()
-        //connect()
+        connect()
+    }
+    
+    func loadData() {
+        let realm = try! Realm()
+        meals = realm.objects(Meal.self)
     }
     
     func connect() {
-        let socket = SocketIOClient(socketURL: URL(string: "http://techfestmunich.herokuapp.com")!, config: [.log(true), .compress])
+        let socket = SocketIOClient(socketURL: URL(string: "https://polar-shelf-82300.herokuapp.com/")!, config: [.log(true), .compress])
         
         socket.on(clientEvent: .connect) {data, ack in
             print("socket connected")
         }
         
-        socket.on("/") {data, ack in
-            if let cur = data[0] as? Double {
-                socket.emitWithAck("canUpdate", cur).timingOut(after: 0) {data in
-                    socket.emit("update", ["amount": cur + 2.50])
-                }
-                
-                ack.with("Got your currentAmount", "dude")
+        socket.on("message") {data, ack in
+            if let cur = data as? String {
+                print(cur)
             }
         }
         
@@ -50,25 +58,45 @@ class ViewController: UIViewController {
     }
     
     func initDemo() {
-        fatValue = 23
-        carbsValue = 105
-        proteinValue = 90
-        sugarValue = 10
-        caloriesUpToNow = 500
+        let realm = try! Realm()
+        let food1 = Meal()
+        food1.foodType = "Meal 1"
+        food1.calories = 400
+        food1.carbs = 50
+        food1.fat = 50
+        food1.protein = 150
+        let food2 = Meal()
+        food2.foodType = "Meal 2"
+        food2.calories = 800
+        food2.carbs = 400
+        food2.fat = 100
+        food2.protein = 250
+        let food3 = Meal()
+        food3.foodType = "Meal 3"
+        food3.calories = 500
+        food3.carbs = 300
+        food3.fat = 50
+        food3.protein = 100
+        try! realm.write {
+            realm.add(food1)
+            realm.add(food2)
+            realm.add(food3)
+        }
     }
     
     func setupValues() {
-        if let fat = fatValue,
-            let carbs = carbsValue,
-            let protein = proteinValue,
-            let sugar = sugarValue {
-            
-            self.stomachView.fatValue = CGFloat(fat)
-            self.stomachView.carbsValue = CGFloat(fat + carbs)
-            self.stomachView.proteinValue = CGFloat(fat + carbs + protein)
-            self.stomachView.sugarValue = CGFloat(fat + carbs + protein + sugar)
-
-        }
+        self.calcTotalValues()
+        self.calcPercentage()
+        
+        let endFatValue = self.fatReference * 347
+        let endCarbsValue = self.carbsReference * 347 + endFatValue
+        let endProteinValue = self.proteinReference * 347 + endCarbsValue
+        let endOthersValue = self.othersReference * 347 + endProteinValue
+        
+        self.stomachView.fatValue = CGFloat(endFatValue)
+        self.stomachView.carbsValue = CGFloat(endCarbsValue)
+        self.stomachView.proteinValue = CGFloat(endProteinValue)
+        self.stomachView.othersValue = CGFloat(endOthersValue)
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,16 +105,29 @@ class ViewController: UIViewController {
     }
     
     func calcPercentage() {
-        guard let caloriesGoal = caloriesGoal else {
-            //set standard daily recommendation
-            self.caloriesGoal = 2700
+        
+        
+        let referenceCaloriesValue: Double = self.caloriesUpToNow / self.caloriesGoal
+        
+        fatReference = (fatValueTotal / caloriesUpToNow) * referenceCaloriesValue
+        carbsReference = (carbsValueTotal / caloriesUpToNow) * referenceCaloriesValue
+        proteinReference = (proteinValueTotal / caloriesUpToNow) * referenceCaloriesValue
+        othersReference = (othersValueTotal / caloriesUpToNow) * referenceCaloriesValue
+    }
+    
+    func calcTotalValues() {
+        guard let meals = meals else {
+            print("No meals found")
             return
         }
-        guard let caloriesUpToNow = caloriesUpToNow else {
-            self.caloriesUpToNow = 0
-            return
+        for meal in meals {
+            caloriesUpToNow += meal.calories
+            carbsValueTotal += meal.carbs
+            fatValueTotal += meal.fat
+            proteinValueTotal += meal.protein
         }
-        var referenceCaloriesValue = caloriesUpToNow / caloriesGoal
+        
+        self.othersValueTotal = self.caloriesUpToNow - (carbsValueTotal + proteinValueTotal + fatValueTotal)
     }
 
 

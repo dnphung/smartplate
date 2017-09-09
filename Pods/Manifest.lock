@@ -1,15 +1,26 @@
 PODS:
+  - ObjectMapper (2.2.8)
+  - Realm (2.10.0):
+    - Realm/Headers (= 2.10.0)
+  - Realm/Headers (2.10.0)
+  - RealmSwift (2.10.0):
+    - Realm (= 2.10.0)
   - Socket.IO-Client-Swift (11.1.2):
     - StarscreamSocketIO (~> 8.0.5)
   - StarscreamSocketIO (8.0.5)
 
 DEPENDENCIES:
+  - ObjectMapper
+  - RealmSwift
   - Socket.IO-Client-Swift (~> 11.1.2)
 
 SPEC CHECKSUMS:
+  ObjectMapper: 3d571bb5af471c779e1160828cd9ad5c4ef90958
+  Realm: 98b3a25643cf6b3e07d2b99fb43fe0eb9c801dec
+  RealmSwift: 34073ad3a31232bbaf7c0db898c037940284cba2
   Socket.IO-Client-Swift: 2283d3d333cc6b24c4e7ba191a8a7907d35ac42b
   StarscreamSocketIO: b56993332d3cd74885a7486e183ff0cd9541b3f3
 
-PODFILE CHECKSUM: 51c4c8f80768ef37f3f78035ff6e40dd07ec91c6
+PODFILE CHECKSUM: 2b030813d940d2c7ecfd457d5c6cbf85392aae33
 
 COCOAPODS: 1.1.1

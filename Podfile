@@ -7,6 +7,6 @@ target 'SmartPlate' do
 
   # Pods for SmartPlate
 pod 'Socket.IO-Client-Swift', '~> 11.1.2'
-pod 'ObjectMapper', '~ 2.2.8'
-
+pod 'ObjectMapper'
+pod 'RealmSwift'
 end
