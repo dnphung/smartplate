@@ -25,10 +25,10 @@ class Meal: Object, Mappable {
         if map.JSON["carbs"] == nil {
             print("JSON attribute 'carbs' couldn't be found")
         }
-        if map.JSON["fat"] == nil {
+        if map.JSON["fats"] == nil {
             print("JSON attribute 'fat' couldn't be found")
         }
-        if map.JSON["protein"] == nil {
+        if map.JSON["proteins"] == nil {
             print("JSON attribute 'protein' couldn't be found")
         }
     }
@@ -37,8 +37,9 @@ class Meal: Object, Mappable {
     func mapping(map: Map) {
         calories <- map["calories"]
         carbs <- map["carbs"]
-        fat <- map["fat"]
-        protein <- map["protein"]
+        fat <- map["fats"]
+        protein <- map["proteins"]
+        foodType <- map["foodType"]
     }
     
 }

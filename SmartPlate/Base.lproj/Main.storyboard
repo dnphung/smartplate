@@ -24,7 +24,21 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cAr-3n-kTe" customClass="StomachIndicatorView" customModule="SmartPlate" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5f-f4-FA8">
+                                        <rect key="frame" x="8" y="8" width="46" height="30"/>
+                                        <state key="normal" title="clear"/>
+                                        <connections>
+                                            <action selector="clearDataButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1cI-2r-4T5"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="M5f-f4-FA8" firstAttribute="leading" secondItem="cAr-3n-kTe" secondAttribute="leading" constant="8" id="PqN-gq-vUP"/>
+                                    <constraint firstItem="M5f-f4-FA8" firstAttribute="top" secondItem="cAr-3n-kTe" secondAttribute="top" constant="8" id="rax-cU-pyh"/>
+                                    <constraint firstAttribute="trailing" secondItem="M5f-f4-FA8" secondAttribute="trailing" constant="321" id="xJc-VC-LtJ"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>

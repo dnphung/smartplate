@@ -26,10 +26,13 @@ class ViewController: UIViewController {
     var caloriesGoal = 3500.0
     
     var meals: Results<Meal>?
-
+    var lastMeal = ""
+    
+    var socket: SocketIOClient?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        initDemo()
+       // initDemo()
         loadData()
         setupValues()
         connect()
@@ -41,15 +44,40 @@ class ViewController: UIViewController {
     }
     
     func connect() {
-        let socket = SocketIOClient(socketURL: URL(string: "https://polar-shelf-82300.herokuapp.com/")!, config: [.log(true), .compress])
+        socket = SocketIOClient(socketURL: URL(string: "https://polar-shelf-82300.herokuapp.com")!, config: [.log(true), .compress])
+        
+        guard let socket = socket else {
+            print("socket not available")
+            return
+        }
         
         socket.on(clientEvent: .connect) {data, ack in
             print("socket connected")
         }
         
         socket.on("message") {data, ack in
-            if let cur = data as? String {
-                print(cur)
+            print(data)
+            if let cur = data[0] as? [String: Any] {
+                print("This is the data: \(cur)" )
+//                guard let jsonData = try? JSONSerialization.data(withJSONObject: cur, options: []) else {
+//                    return
+//                }
+//                let jsonString = String(data: jsonData, encoding: .utf8) 
+                //print(jsonString)
+                guard let meal = Meal(JSON: cur) else {
+                    print("couldn't parse meal")
+                    return
+                }
+                if self.lastMeal != meal.foodType {
+                    let realm = try! Realm()
+                    
+                    try! realm.write {
+                        realm.add(meal)
+                    }
+                    self.lastMeal = meal.foodType
+                    self.loadData()
+                    self.setupValues()
+                }
             }
         }
         
@@ -97,6 +125,14 @@ class ViewController: UIViewController {
         self.stomachView.carbsValue = CGFloat(endCarbsValue)
         self.stomachView.proteinValue = CGFloat(endProteinValue)
         self.stomachView.othersValue = CGFloat(endOthersValue)
+        
+        self.stomachView.caloriesTrackingValue = "\(self.caloriesUpToNow) / \(self.caloriesGoal) kcal"
+        self.stomachView.lastMealLabel = "Your last meal: \(lastMeal)"
+        
+        self.stomachView.fatPerc = "Fats \((fatReference * 100).rounded()) %"
+        self.stomachView.carbsPerc = "Carbs \((carbsReference * 100).rounded()) %"
+        self.stomachView.proteinPerc = "Proteins \((proteinReference * 100).rounded()) %"
+        self.stomachView.setNeedsDisplay()
     }
 
     override func didReceiveMemoryWarning() {
@@ -112,7 +148,6 @@ class ViewController: UIViewController {
         fatReference = (fatValueTotal / caloriesUpToNow) * referenceCaloriesValue
         carbsReference = (carbsValueTotal / caloriesUpToNow) * referenceCaloriesValue
         proteinReference = (proteinValueTotal / caloriesUpToNow) * referenceCaloriesValue
-        othersReference = (othersValueTotal / caloriesUpToNow) * referenceCaloriesValue
     }
     
     func calcTotalValues() {
@@ -120,16 +155,37 @@ class ViewController: UIViewController {
             print("No meals found")
             return
         }
+        caloriesUpToNow = 0.0
+        carbsValueTotal = 0.0
+        fatValueTotal = 0.0
+        proteinValueTotal = 0.0
+        
         for meal in meals {
             caloriesUpToNow += meal.calories
-            carbsValueTotal += meal.carbs
-            fatValueTotal += meal.fat
-            proteinValueTotal += meal.protein
+            carbsValueTotal += meal.carbs * 4
+            fatValueTotal += meal.fat * 9
+            proteinValueTotal += meal.protein * 4
         }
         
-        self.othersValueTotal = self.caloriesUpToNow - (carbsValueTotal + proteinValueTotal + fatValueTotal)
     }
-
-
+    @IBAction func clearDataButton(_ sender: UIButton) {
+        fatValueTotal = 0.0
+        carbsValueTotal = 0.0
+        proteinValueTotal = 0.0
+        caloriesUpToNow = 0.0
+        
+        fatReference = 0.0
+        carbsReference = 0.0
+        proteinReference = 0.0
+        
+        lastMeal = ""
+        
+        let realm = try! Realm()
+        try! realm.write {
+            realm.deleteAll()
+        }
+        loadData()
+        setupValues()
+    }
 }
 
